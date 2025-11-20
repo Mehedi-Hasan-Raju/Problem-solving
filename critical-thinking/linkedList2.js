@@ -68,11 +68,39 @@ insert(index, value){
     this.length++;
 }
 
+
+remove(index){
+    if( index === 0) {
+        const removedItem = this.head.value;
+        this.head = this.head.next;
+
+        if(this.length === 1){
+            this.tail = null;
+        }
+
+        this.length--;
+        return removedItem;
+    }
+
+
+    const leadingNode = this._traverseToIndex(index - 1);
+    const nodeToRemove = leadingNode.next;
+
+    leadingNode.next = nodeToRemove.next;
+
+    if(leadingNode.next === null) {
+        this.tail = leadingNode;
+    }
+    this.length--;
+    return nodeToRemove.value;
+}
+
+
 _traverseToIndex(index) {
     let count = 0;
     let currentNode = this.head;
 
-    while (count != index) {
+    while (count !== index) {
         currentNode = currentNode.next;
         count++;
     }
@@ -82,10 +110,12 @@ _traverseToIndex(index) {
 
 
 
+
+
 print() {
     const arr = [];
 let currentNode = this.head;
-while(currentNode != null) {
+while(currentNode !== null) {
     arr.push(currentNode.value);
     currentNode = currentNode.next;
   }
@@ -104,6 +134,9 @@ linkedList.prepend(10);
 linkedList.prepend(20);
 linkedList.prepend(30);
 
+
+
+linkedList.remove(2);
 linkedList.insert(2 , 100);
 
 linkedList.print();
